@@ -4,4 +4,7 @@
     <string name="password">Password</string>
     <string name="click_here_to_register">Click Here to Register</string>
     <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="click_here_to_login">Click here to Login</string>
+    <string name="logout">Logout</string>
 </resources>
