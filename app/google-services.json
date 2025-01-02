@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "19653881370",
+    "project_id": "raga-project2",
+    "storage_bucket": "raga-project2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:19653881370:android:a73734e9c61be7b64beba3",
+        "android_client_info": {
+          "package_name": "com.example.foodorderapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCC6Zzz819xNpF1w7UcWA_N0ygbgpdYgdE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
