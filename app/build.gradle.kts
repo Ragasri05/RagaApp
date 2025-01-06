@@ -38,7 +38,22 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+
+    // firebase authentication
     implementation(libs.firebase.auth)
+
+
+    //recyclerView dependency
+    implementation(libs.recyclerview)
+    //cardView
+    implementation(libs.cardview)
+
+    //RoomDatabase
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor(libs.androidx.room.compiler) // For Kotlin projects
+    // Optional: If you need Room with RxJava or Coroutines support
+    implementation(libs.androidx.room.ktx)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

@@ -7,4 +7,10 @@
     <string name="register">Register</string>
     <string name="click_here_to_login">Click here to Login</string>
     <string name="logout">Logout</string>
+    <string name="delete">delete</string>
+    <string name="modify">Modify</string>
+    <string name="save">save</string>
+    <string name="price">Price</string>
+    <string name="food">Food</string>
+    <string name="get_menu">Get menu</string>
 </resources>
