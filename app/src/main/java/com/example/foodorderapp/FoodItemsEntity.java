@@ -13,6 +13,7 @@ public class FoodItemsEntity {
     @ColumnInfo (name = "price")
     public Double price;
 
+
     public FoodItemsEntity(String food, Double price) {
         this.uid = uid;
         this.food = food;
@@ -22,7 +23,6 @@ public class FoodItemsEntity {
     public String getFood() {
         return food;
     }
-
     public void setFood(String food) {
         this.food = food;
     }
@@ -43,3 +43,4 @@ public class FoodItemsEntity {
         this.uid = uid;
     }
 }
+

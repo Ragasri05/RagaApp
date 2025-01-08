@@ -15,7 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button logoutButton, savebutton, modifybutton, deletebutton, fetchButton;
+    Button logoutButton, savebutton, fetchButton;
     EditText food, price;
 
     @Override
@@ -26,8 +26,6 @@ public class MainActivity extends AppCompatActivity {
 
         logoutButton = findViewById(R.id.logoutButton);
         savebutton = findViewById(R.id.savebutton);
-        modifybutton = findViewById(R.id.modifybutton);
-        deletebutton = findViewById(R.id.deletebutton);
         fetchButton = findViewById(R.id.fetchbutton);
         food = findViewById(R.id.food);
         price = findViewById(R.id.price);
