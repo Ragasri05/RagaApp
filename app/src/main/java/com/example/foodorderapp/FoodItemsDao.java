@@ -18,8 +18,12 @@ public interface FoodItemsDao {
     @Query("SELECT * FROM FoodItemsEntity")
     List<FoodItemsEntity> getTheMenu();
 
+    //Query to update.
     @Query("UPDATE FoodItemsEntity SET food = :fooditem, price = :price WHERE uid = :uid")
-    public void updateById(int uid, String fooditem, Double price);
+    void update(int uid, String fooditem, Double price);
+
+    @Query("DELETE FROM FoodItemsEntity WHERE food = :fooditem")
+    void deletebyitem(String fooditem);
 
 
 }

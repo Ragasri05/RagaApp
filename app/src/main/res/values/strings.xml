@@ -13,4 +13,7 @@
     <string name="price">Price</string>
     <string name="food">Food</string>
     <string name="get_menu">Get menu</string>
+    <string name="delete_button">delete button</string>
+    <string name="Ufood">Food</string>
+    <string name="update">Update</string>
 </resources>
