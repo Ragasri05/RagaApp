@@ -28,6 +28,10 @@ public class GetMenu extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_get_menu);
 
+
+        recyclerView = findViewById(R.id.recyclerView); // Ensure this ID matches your XML layout
+        recyclerView.setLayoutManager(new LinearLayoutManager(this)); // Set layout manager
+
         //4.
         // Initialising the Launcher.
         //3.
@@ -44,8 +48,6 @@ public class GetMenu extends AppCompatActivity {
                             FoodDatabase fdb = Room.databaseBuilder(getApplicationContext(), FoodDatabase.class,"my_food_database").allowMainThreadQueries().build();
                             FoodItemsDao foodItemsDao = fdb.foodItemsDao();
                             foodItemsDao.update(id,updatedFood,updatedPrice);
-                            getTheMenu();
-
                         }
                     }
                 });
@@ -56,6 +58,7 @@ public class GetMenu extends AppCompatActivity {
     public void getTheMenu(){
         FoodDatabase fdb = Room.databaseBuilder(getApplicationContext(), FoodDatabase.class,"my_food_database").allowMainThreadQueries().build();
         FoodItemsDao foodItemsDao = fdb.foodItemsDao();
+
         List<FoodItemsEntity> foodItemsEntity = foodItemsDao.getTheMenu();// datasource.
         Adapter adapter = new Adapter(foodItemsEntity,updateFoodLauncher);
         recyclerView.setAdapter(adapter);
