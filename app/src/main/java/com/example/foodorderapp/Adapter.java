@@ -19,12 +19,9 @@ import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     List<FoodItemsEntity> foodItemsEntity;
-    // 1.
-    private ActivityResultLauncher<Intent> updateFoodLauncher;
-    public Adapter(List<FoodItemsEntity> foodItemsEntity,ActivityResultLauncher<Intent> updateFoodLauncher) {
-        this.updateFoodLauncher = updateFoodLauncher;
-        this.foodItemsEntity = foodItemsEntity;
 
+    public Adapter(List<FoodItemsEntity> foodItemsEntity) {
+        this.foodItemsEntity = foodItemsEntity;
     }
 
 
@@ -64,17 +61,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                 }
             }
         });
-        //2.
-        holder.editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(holder.editButton.getContext(), Update.class);
-                i.putExtra("uid",foodItemsEntity.get(holder.getBindingAdapterPosition()).getUid());
-                i.putExtra("updateFood",foodItemsEntity.get(holder.getBindingAdapterPosition()).getFood());
-                i.putExtra("updatePrice",foodItemsEntity.get(holder.getBindingAdapterPosition()).getPrice());
-                updateFoodLauncher.launch(i);
-            }
-        });
     }
 
     @Override
@@ -96,10 +82,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             deleteButton = itemView.findViewById(R.id.deleteButton);
             editButton = itemView.findViewById(R.id.editButton);
         }
-    }
-
-    public void updateFood(String updatedFood, Double updatedPrice){
-
     }
 }
 

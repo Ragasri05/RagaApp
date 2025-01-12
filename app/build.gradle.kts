@@ -32,6 +32,7 @@ android {
     }
 }
 
+
 dependencies {
 
     implementation(libs.appcompat)
@@ -41,6 +42,11 @@ dependencies {
 
     // firebase authentication
     implementation(libs.firebase.auth)
+    // firebase sync
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics.ktx)
+    // fie base realtime database.
+    implementation (libs.firebase.database)
 
 
     //recyclerView dependency
@@ -57,5 +63,4 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    implementation (libs.androidx.multidex)
 }

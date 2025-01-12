@@ -1,5 +1,6 @@
 package com.example.foodorderapp;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -16,7 +17,7 @@ public interface FoodItemsDao {
     Boolean is_exist(String fooditem);
 
     @Query("SELECT * FROM FoodItemsEntity")
-    List<FoodItemsEntity> getTheMenu();
+    LiveData<List<FoodItemsEntity>> getTheMenu();
 
     //Query to update.
     @Query("UPDATE FoodItemsEntity SET food = :fooditem, price = :price WHERE uid = :uid")

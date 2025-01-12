@@ -1,8 +1,13 @@
 package com.example.foodorderapp;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,15 +15,20 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.room.Room;
 
+import com.google.firebase.Firebase;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-
-
-
+    Receiver receiver = new Receiver();
 
     Button logoutButton, savebutton, fetchButton;
     EditText food, price;
@@ -35,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
         food = findViewById(R.id.food);
         price = findViewById(R.id.price);
 
-
         // when save button is clicked and if the food item doesn't exixst in the databse, then addFoodItems Method is called.
         savebutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,13 +54,12 @@ public class MainActivity extends AppCompatActivity {
 
                 FoodItemsDao foodItemsDao = fdb.foodItemsDao();
                 Boolean checkIfFoodExists = foodItemsDao.is_exist(food.getText().toString()); // if food item exists it returns True else False.
-                if (!checkIfFoodExists){
-                    foodItemsDao.addFoodItems(new FoodItemsEntity (food.getText().toString(), Double.parseDouble(price.getText().toString())));
+                if (!checkIfFoodExists) {
+                    foodItemsDao.addFoodItems(new FoodItemsEntity(food.getText().toString(), Double.parseDouble(price.getText().toString())));
                     food.setText("");
                     price.setText("");
                     Toast.makeText(MainActivity.this, "Saved successfully", Toast.LENGTH_SHORT).show();
-                }
-                else{
+                } else {
                     food.setText("");
                     price.setText("");
                     Toast.makeText(MainActivity.this, "Food already exists", Toast.LENGTH_SHORT).show();
@@ -65,27 +73,22 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), GetMenu.class));
             }
         });
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+        registerReceiver(receiver,intentFilter);
+
     }
-    // this method is called when the user clicks the logout button.
-    public void logout(View view){
+
+    public void logout(View view) {
         FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(getApplicationContext(), LoginScreen.class));
         finish();
     }
 
-    MyReceiver myReceiver = new MyReceiver();
-
     @Override
-    protected void onStart() {
-        super.onStart();
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED);
-        this.registerReceiver(myReceiver,intentFilter);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        this.unregisterReceiver(myReceiver);
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
     }
 }
