@@ -1,10 +1,12 @@
 package com.example.foodorderapp;
 
+import android.view.Menu;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity
+@Entity (tableName = "FoodItemsEntity")
 public class FoodItemsEntity {
     @PrimaryKey (autoGenerate = true)
     public int uid;
@@ -14,7 +16,7 @@ public class FoodItemsEntity {
     public Double price;
 
 
-    public FoodItemsEntity(String food, Double price) {
+    public FoodItemsEntity(String food , Double price) {
         this.uid = uid;
         this.food = food;
         this.price = price;

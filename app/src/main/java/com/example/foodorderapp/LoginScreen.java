@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,13 +18,16 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.squareup.picasso.Picasso;
 
 
 public class LoginScreen extends AppCompatActivity {
     EditText LEmail, LPassword;
     TextView LTextView;
-    Button LButton;
+    Button LButton, MenuButton;
     FirebaseAuth fb;
+    ImageView im1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,7 @@ public class LoginScreen extends AppCompatActivity {
         LButton = findViewById(R.id.LButton);
         LTextView = findViewById(R.id.LTextView);
         fb = FirebaseAuth.getInstance();
+        MenuButton = findViewById(R.id.MenuButton);
 
         LButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,5 +77,18 @@ public class LoginScreen extends AppCompatActivity {
                 finish();
             }
         });
+
+        MenuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginScreen.this, Customer.class));
+                finish();
+            }
+        });
+
+        //8.Loading Image udsing Picasso.
+        im1 = findViewById(R.id.imageView2);
+        String url = "https://thumbs.dreamstime.com/b/login-icon-button-vector-illustration-isolated-white-background-127001787.jpg";
+        Picasso.get().load(url).into(im1);
     }
 }

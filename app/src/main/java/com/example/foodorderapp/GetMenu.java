@@ -40,10 +40,9 @@ public class GetMenu extends AppCompatActivity {
 
 
     public void getTheMenu(){
-            // Using a background thread for Room database operation
         FoodDatabase fdb = Room.databaseBuilder(getApplicationContext(), FoodDatabase.class, "my_food_database").allowMainThreadQueries().build();
         FoodItemsDao foodItemsDao = fdb.foodItemsDao();
-        List<FoodItemsEntity> foodItemsEntity = foodItemsDao.getTheMenu().getValue();
+        List<FoodItemsEntity> foodItemsEntity = foodItemsDao.getTheMenu();
         Adapter adapter = new Adapter(foodItemsEntity);
         recyclerView.setAdapter(adapter);
     }

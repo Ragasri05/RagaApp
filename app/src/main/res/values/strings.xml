@@ -16,4 +16,8 @@
     <string name="delete_button">delete button</string>
     <string name="Ufood">Food</string>
     <string name="update">Update</string>
+    <string name="customer_click_here_to_view_the_menu">Customer? Click here to View the menu</string>
+    <string name="menu">Menu</string>
+    <string name="cfood">CFood</string>
+    <string name="cprice">CPrice</string>
 </resources>

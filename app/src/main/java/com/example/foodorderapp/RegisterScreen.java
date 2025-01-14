@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +21,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.squareup.picasso.Picasso;
 
 public class RegisterScreen extends AppCompatActivity {
 
@@ -27,6 +29,7 @@ public class RegisterScreen extends AppCompatActivity {
     EditText REmail, RPassword;
     TextView RTextView;
     Button RButton;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,7 @@ public class RegisterScreen extends AppCompatActivity {
             RPassword = findViewById(R.id.Ret2);
             RTextView = findViewById(R.id.Rtv1);
             RButton = findViewById(R.id.Rb1);
+            imageView = findViewById(R.id.imageView);
 
             // checking if the user already logged in
             if (fb.getCurrentUser() != null){
@@ -86,5 +90,9 @@ public class RegisterScreen extends AppCompatActivity {
                     finish();
                 }
             });
+
+            //8.ImageLoading Using Picasso.
+            String url = "https://img.freepik.com/premium-vector/register-now-badge-vector-isolated-white-vector-button-registration-services-blogs-websites_735449-447.jpg?semt=ais_hybrid";
+            Picasso.get().load(url).error(R.drawable.ic_launcher_foreground).into(imageView);
     }
 }
