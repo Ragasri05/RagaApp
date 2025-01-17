@@ -24,7 +24,7 @@ import com.squareup.picasso.Picasso;
 public class LoginScreen extends AppCompatActivity {
     EditText LEmail, LPassword;
     TextView LTextView;
-    Button LButton, MenuButton;
+    Button LButton, MenuButton, StopMusic, startMusic;
     FirebaseAuth fb;
     ImageView im1;
 
@@ -41,6 +41,8 @@ public class LoginScreen extends AppCompatActivity {
         LTextView = findViewById(R.id.LTextView);
         fb = FirebaseAuth.getInstance();
         MenuButton = findViewById(R.id.MenuButton);
+        StopMusic = findViewById(R.id.StopMusicButton);
+        startMusic =findViewById(R.id.startMusicButton);
 
         LButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +85,20 @@ public class LoginScreen extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(LoginScreen.this, Customer.class));
                 finish();
+            }
+        });
+
+        startMusic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startService(new Intent(LoginScreen.this, ServiceProvider.class));
+            }
+        });
+
+        StopMusic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                stopService(new Intent(LoginScreen.this,ServiceProvider.class));
             }
         });
 

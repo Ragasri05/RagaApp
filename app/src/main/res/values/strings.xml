@@ -20,4 +20,6 @@
     <string name="menu">Menu</string>
     <string name="cfood">CFood</string>
     <string name="cprice">CPrice</string>
+    <string name="stopmusic">StopMusic</string>
+    <string name="startmusic">StartMusic</string>
 </resources>

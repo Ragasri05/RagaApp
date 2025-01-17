@@ -95,5 +95,29 @@
         app:layout_constraintVertical_bias="0.192"
         app:srcCompat="@drawable/ic_launcher_foreground" />
 
+    <Button
+        android:id="@+id/StopMusicButton"
+        android:layout_width="119dp"
+        android:layout_height="51dp"
+        android:text="@string/stopmusic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.852"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023" />
+
+    <Button
+        android:id="@+id/startMusicButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/startmusic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.187"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.027" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

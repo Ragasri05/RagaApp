@@ -41,7 +41,6 @@ public class Customer extends AppCompatActivity {
         if (uri != null){
             // getting the path segments and storing it into the list.
             List<String> parameters = uri.getPathSegments();
-            // Extracting String from the parameters
             if (parameters != null && !parameters.isEmpty()) {
                 // Extract the last segment safely
                 String param = parameters.get(parameters.size() - 1);
