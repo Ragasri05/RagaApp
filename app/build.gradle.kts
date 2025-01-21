@@ -42,12 +42,6 @@ dependencies {
 
     // firebase authentication
     implementation(libs.firebase.auth)
-    // firebase sync
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.analytics.ktx)
-    // fie base realtime database.
-    implementation (libs.firebase.database)
-
 
     //recyclerView dependency
     implementation(libs.recyclerview)

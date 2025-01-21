@@ -21,9 +21,6 @@ import androidx.room.Room;
 import com.google.firebase.Firebase;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -45,21 +42,26 @@ public class MainActivity extends AppCompatActivity {
         food = findViewById(R.id.food);
         price = findViewById(R.id.price);
 
-        // when save button is clicked and if the food item doesn't exixst in the databse, then addFoodItems Method is called.
+        // when save button is clicked and if the food item doesn't exist in the database, then addFoodItems Method is called.
         savebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Instantiating the Room database.
+                // Room.databaseBuilder returns the instance of FoodDatabase.
+                // build() creates the instance of the database.
                 FoodDatabase fdb = Room.databaseBuilder(getApplicationContext(),
                         FoodDatabase.class, "my_food_database").allowMainThreadQueries().build();
 
+                // Access the FoodItemsDao from the FoodDatabase instance
                 FoodItemsDao foodItemsDao = fdb.foodItemsDao();
+                // is_exist will return true or false.
                 Boolean checkIfFoodExists = foodItemsDao.is_exist(food.getText().toString()); // if food item exists it returns True else False.
                 if (!checkIfFoodExists) {
                     foodItemsDao.addFoodItems(new FoodItemsEntity(food.getText().toString(), Double.parseDouble(price.getText().toString())));
                     food.setText("");
                     price.setText("");
                     Toast.makeText(MainActivity.this, "Saved successfully", Toast.LENGTH_SHORT).show();
-                } else {
+                } else { // if is_exist is true.
                     food.setText("");
                     price.setText("");
                     Toast.makeText(MainActivity.this, "Food already exists", Toast.LENGTH_SHORT).show();

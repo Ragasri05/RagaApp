@@ -6,12 +6,18 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+// entity class represents able in DataBase.
 @Entity (tableName = "FoodItemsEntity")
 public class FoodItemsEntity {
+    // an entity must have a primary key.
+    // primary key Ensures that each record in the table have a unique identity.
+    // automatically generates the value for this field.
     @PrimaryKey (autoGenerate = true)
     public int uid;
+    // column in the databse table with name food.
     @ColumnInfo (name = "food")
     public String food;
+    //column in the databse table with name price.
     @ColumnInfo (name = "price")
     public Double price;
 

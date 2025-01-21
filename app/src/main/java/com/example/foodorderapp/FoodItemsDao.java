@@ -9,22 +9,33 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import java.util.List;
+// Dao provides methods for the rest of the app to interact with the Table.
 
 @Dao
 public interface FoodItemsDao {
+
     @Insert
     public void addFoodItems(FoodItemsEntity foodItemsEntity);
 
+    // to check if a particular fooditem exists in the database table
+    //SELECT EXISTS if a sub query returns any rows (it returns a boolean true or False).
+    //SELECT * FROM FoodItemsEntity selects all columns from the table.
+    // WHERE food = :fooditem --> condition.
     @Query("SELECT EXISTS(SELECT * FROM FoodItemsEntity WHERE food = :fooditem)")
     Boolean is_exist(String fooditem);
 
+    //SELECT * FROM FoodItemsEntity selects all columns from the table.
+    //this method returns a list where Each element in the list is a FoodItemsEntity object containing the values of one row from the database.
     @Query("SELECT * FROM FoodItemsEntity")
     List<FoodItemsEntity> getTheMenu();
 
-    //Query to update.
+    //Update-->specifies the table where the changes will be made.
+    //SET --> specifies the table  where the changes will be made.
+    //WHERE food = :fooditem --> condition.
     @Query("UPDATE FoodItemsEntity SET food = :fooditem, price = :price WHERE uid = :uid")
     void update(int uid, String fooditem, Double price);
 
+    // Deletes rows that match the given condition.
     @Query("DELETE FROM FoodItemsEntity WHERE food = :fooditem")
     void deletebyitem(String fooditem);
 

@@ -53,6 +53,7 @@ public class RegisterScreen extends AppCompatActivity {
             RButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    // creat5ng Str5ngs t6 read the text fr60 ed5t Text.
                     String email = REmail.getText().toString().trim();
                     String password = RPassword.getText().toString().trim();
 

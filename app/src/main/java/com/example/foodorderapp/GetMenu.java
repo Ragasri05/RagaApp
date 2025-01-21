@@ -16,8 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -40,10 +38,18 @@ public class GetMenu extends AppCompatActivity {
 
 
     public void getTheMenu(){
+        //Instantiating the Room database.
+        // Room.databaseBuilder returns the instance of FoodDatabase.
+        // build() creates the instance of the database.
         FoodDatabase fdb = Room.databaseBuilder(getApplicationContext(), FoodDatabase.class, "my_food_database").allowMainThreadQueries().build();
+        // Access the FoodItemsDao from the FoodDatabase instance
         FoodItemsDao foodItemsDao = fdb.foodItemsDao();
+        //calling the method
         List<FoodItemsEntity> foodItemsEntity = foodItemsDao.getTheMenu();
+
+        //initialises adapter.
         Adapter adapter = new Adapter(foodItemsEntity);
+        //The RecyclerView will call the Adapter methods to manage and display its items.
         recyclerView.setAdapter(adapter);
     }
 }
