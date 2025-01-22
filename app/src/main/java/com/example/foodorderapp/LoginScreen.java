@@ -62,7 +62,10 @@ public class LoginScreen extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            String ownerId = fb.getCurrentUser().getUid();
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            intent.putExtra("ownerId", ownerId); // Pass the ownerId
+                            startActivity(intent);
                         } else {
                             Toast.makeText(LoginScreen.this, "error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }

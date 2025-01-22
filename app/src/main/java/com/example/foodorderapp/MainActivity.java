@@ -1,27 +1,19 @@
 package com.example.foodorderapp;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.room.Room;
-
-import com.google.firebase.Firebase;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
-import java.util.List;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
 
     Button logoutButton, savebutton, fetchButton;
     EditText food, price;
+    TextView ownerId;
+    FirebaseAuth fb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +35,11 @@ public class MainActivity extends AppCompatActivity {
         fetchButton = findViewById(R.id.fetchbutton);
         food = findViewById(R.id.food);
         price = findViewById(R.id.price);
+        ownerId = findViewById(R.id.ownerId);
 
+        String Oid = getIntent().getStringExtra("ownerId");
+        ownerId.setText("UserId: "+Oid);
+        String DatabaseName = "foodDataBase"+Oid;
         // when save button is clicked and if the food item doesn't exist in the database, then addFoodItems Method is called.
         savebutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 // Room.databaseBuilder returns the instance of FoodDatabase.
                 // build() creates the instance of the database.
                 FoodDatabase fdb = Room.databaseBuilder(getApplicationContext(),
-                        FoodDatabase.class, "my_food_database").allowMainThreadQueries().build();
+                        FoodDatabase.class, DatabaseName).allowMainThreadQueries().build();
 
                 // Access the FoodItemsDao from the FoodDatabase instance
                 FoodItemsDao foodItemsDao = fdb.foodItemsDao();
@@ -72,7 +70,9 @@ public class MainActivity extends AppCompatActivity {
         fetchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), GetMenu.class));
+                Intent intent = new Intent(getApplicationContext(), GetMenu.class);
+                intent.putExtra("ownerId", Oid); // Pass the ownerId
+                startActivity(intent);
             }
         });
 

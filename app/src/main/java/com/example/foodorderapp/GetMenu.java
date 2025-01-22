@@ -24,6 +24,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class GetMenu extends AppCompatActivity {
 
     RecyclerView recyclerView;
+    String Oid, DatabaseName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,8 @@ public class GetMenu extends AppCompatActivity {
         setContentView(R.layout.activity_get_menu);
         recyclerView = findViewById(R.id.recyclerView); // Ensure this ID matches your XML layout
         recyclerView.setLayoutManager(new LinearLayoutManager(this)); // Set layout manager
-
+        Oid = getIntent().getStringExtra("ownerId");
+        DatabaseName = "foodDataBase"+Oid;
         getTheMenu();
     }
 
@@ -41,7 +43,7 @@ public class GetMenu extends AppCompatActivity {
         //Instantiating the Room database.
         // Room.databaseBuilder returns the instance of FoodDatabase.
         // build() creates the instance of the database.
-        FoodDatabase fdb = Room.databaseBuilder(getApplicationContext(), FoodDatabase.class, "my_food_database").allowMainThreadQueries().build();
+        FoodDatabase fdb = Room.databaseBuilder(getApplicationContext(), FoodDatabase.class,DatabaseName).allowMainThreadQueries().build();
         // Access the FoodItemsDao from the FoodDatabase instance
         FoodItemsDao foodItemsDao = fdb.foodItemsDao();
         //calling the method
