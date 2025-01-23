@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    style="@style/SCREEN"
     tools:context=".GetMenu">
 
 
@@ -14,5 +15,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/recyclerView"
-        />
+        style="@style/TEXT" />
 </androidx.appcompat.widget.LinearLayoutCompat>

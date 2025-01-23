@@ -2,14 +2,18 @@ package com.example.foodorderapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,7 +29,6 @@ public class GetMenu extends AppCompatActivity {
 
     RecyclerView recyclerView;
     String Oid, DatabaseName;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +38,9 @@ public class GetMenu extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this)); // Set layout manager
         Oid = getIntent().getStringExtra("ownerId");
         DatabaseName = "foodDataBase"+Oid;
+
         getTheMenu();
+
     }
 
 
@@ -54,4 +59,5 @@ public class GetMenu extends AppCompatActivity {
         //The RecyclerView will call the Adapter methods to manage and display its items.
         recyclerView.setAdapter(adapter);
     }
+
 }

@@ -1,18 +1,22 @@
 package com.example.foodorderapp;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,6 +31,11 @@ public class LoginScreen extends AppCompatActivity {
     Button LButton, MenuButton, StopMusic, startMusic;
     FirebaseAuth fb;
     ImageView im1;
+    SharedPreferences sharedPreferences;
+    Switch aSwitch;
+    Boolean nightMode;
+    SharedPreferences.Editor editor;
+
 
 
     @Override
@@ -43,6 +52,7 @@ public class LoginScreen extends AppCompatActivity {
         MenuButton = findViewById(R.id.MenuButton);
         StopMusic = findViewById(R.id.StopMusicButton);
         startMusic =findViewById(R.id.startMusicButton);
+        aSwitch = findViewById(R.id.aSwitch);
 
         LButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,5 +119,37 @@ public class LoginScreen extends AppCompatActivity {
         im1 = findViewById(R.id.imageView2);
         String url = "https://thumbs.dreamstime.com/b/login-icon-button-vector-illustration-isolated-white-background-127001787.jpg";
         Picasso.get().load(url).into(im1);
+
+
+        // Shared Preferences.
+        sharedPreferences = getSharedPreferences("MySharedPreferences",MODE_PRIVATE);
+        nightMode = sharedPreferences.getBoolean("night",false);  // light mode will be default mode.
+        if (nightMode){
+            aSwitch.setChecked(true);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
+        aSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setTheme();
+            }
+        });
+    }
+
+    private void setTheme(){
+        if (nightMode){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            editor = sharedPreferences.edit();
+            editor.putBoolean("night",false);
+        }
+        else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            editor = sharedPreferences.edit();
+            editor.putBoolean("night",true);
+        }
+        editor.apply();
     }
 }

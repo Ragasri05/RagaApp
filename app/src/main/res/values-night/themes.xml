@@ -4,4 +4,20 @@
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
+
+    <!-- Dark mode on -->
+    <!-- BackGround if Dark mode is on -->
+    <style name="SCREEN">
+        <item name="android:background">#000</item>
+    </style>
+
+    <!-- Textcolour if Dark mode is on-->
+    <style name="TEXT">
+        <item name="android:textColor">#fff</item>
+    </style>
+    <!-- Button colour if Dark mode is on -->
+    <style name="BUTTON">
+        <item name="android:button">@android:color/holo_orange_dark</item>
+    </style>
+
 </resources>
