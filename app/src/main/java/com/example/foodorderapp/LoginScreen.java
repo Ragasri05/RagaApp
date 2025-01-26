@@ -88,7 +88,7 @@ public class LoginScreen extends AppCompatActivity {
         LTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), RegisterScreen.class));
+                startActivity(new Intent(LoginScreen.this, RegisterScreen.class));
                 finish();
             }
         });
@@ -114,6 +114,7 @@ public class LoginScreen extends AppCompatActivity {
                 stopService(new Intent(LoginScreen.this,ServiceProvider.class));
             }
         });
+
 
         //8.Loading Image udsing Picasso.
         im1 = findViewById(R.id.imageView2);

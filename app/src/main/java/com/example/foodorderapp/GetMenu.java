@@ -1,28 +1,14 @@
 package com.example.foodorderapp;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Switch;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
-import com.google.firebase.FirebaseApp;
-
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 
 public class GetMenu extends AppCompatActivity {
@@ -39,10 +25,11 @@ public class GetMenu extends AppCompatActivity {
         Oid = getIntent().getStringExtra("ownerId");
         DatabaseName = "foodDataBase"+Oid;
 
+
         getTheMenu();
 
-    }
 
+    }
 
     public void getTheMenu(){
         //Instantiating the Room database.

@@ -20,25 +20,30 @@
         android:theme="@style/Theme.FoodOrderApp"
         tools:targetApi="31">
         <activity
+            android:name=".CustomerMenu"
+            android:exported="false" />
+        <activity
             android:name=".Customer"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="https"/>
+                <data android:scheme="https" />
                 <data android:host="www.customer.com" />
-                <data android:path="/getthemenu"/>
+                <data android:path="/getthemenu" />
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-                <data android:host="www.customer.com"/>
-                <data android:scheme="http"/>
-                <data android:path="/getthemenu"/>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:host="www.customer.com" />
+                <data android:scheme="http" />
+                <data android:path="/getthemenu" />
             </intent-filter>
         </activity>
         <activity
@@ -69,6 +74,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".ServiceProvider"/>
+        <service android:name=".ServiceProvider" />
     </application>
+
 </manifest>
