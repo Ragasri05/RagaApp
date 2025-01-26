@@ -1,23 +1,18 @@
 package com.example.foodorderapp;
 
-import static androidx.activity.result.ActivityResultCallerKt.registerForActivityResult;
-
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import java.util.List;
 // Adapter class is the bridge between datasouce and the UI componenet.
-//
+
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     // data source for the adapter.
@@ -76,6 +71,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         return foodItemsEntity.size();
     }
 
+
     class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView tv1, tv2;
@@ -89,7 +85,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             tv2 = itemView.findViewById(R.id.tv2);
             deleteButton = itemView.findViewById(R.id.deleteButton);
             editButton = itemView.findViewById(R.id.editButton);
+
         }
     }
 }
-

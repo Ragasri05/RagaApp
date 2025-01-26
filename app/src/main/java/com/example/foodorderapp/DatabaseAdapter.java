@@ -80,6 +80,8 @@ public class DatabaseAdapter extends RecyclerView.Adapter<DatabaseAdapter.Databa
                         }
                     }
                 }
+
+
             });
         }
     }
