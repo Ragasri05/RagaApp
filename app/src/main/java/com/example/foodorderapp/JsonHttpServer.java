@@ -18,7 +18,6 @@ public class JsonHttpServer extends NanoHTTPD {
     // this method is called whenever the server receives Http request.
     // IHTTPSession session Contains details of the incoming HTTP request.
     public Response serve(IHTTPSession session) {
-        return super.serve(session);
         try{
             // FileInputStream is a class in java.io package.
             // it is used to read data from the files.
@@ -29,7 +28,7 @@ public class JsonHttpServer extends NanoHTTPD {
         }catch (Exception e){
             //logs the error message
             e.printStackTrace();
-            return newFixedLengthResponse(Response.Status.INTERNAL_ERROR,"text/plain", "Error serving file")
+            return newFixedLengthResponse(Response.Status.INTERNAL_ERROR,"text/plain", "Error serving file");
         }
     }
 }
