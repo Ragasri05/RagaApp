@@ -54,6 +54,9 @@ dependencies {
     // Optional: If you need Room with RxJava or Coroutines support
     implementation(libs.androidx.room.ktx)
 
+    // To generate a Url.
+    implementation (libs.nanohttpd)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
