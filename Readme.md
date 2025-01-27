@@ -169,7 +169,11 @@ public class JsonHttpServer extends NanoHTTPD {
     }
 }
 ```
-
+- step 4: Handling the RecyclerView Click.
+  * when the user clicks on the database recyclerView.
+  * it converts the selected Dtabase to JSon
+  * Starts the Http server to Serve Json file.
+  * Uses Retrofit to fetch and display the data.
 
 
 
