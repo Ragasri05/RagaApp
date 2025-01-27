@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.badge.BadgeUtils;
 
+import java.io.File;
 import java.util.List;
 
 public class DatabaseAdapter extends RecyclerView.Adapter<DatabaseAdapter.DatabaseViewHolder> {
@@ -35,7 +36,7 @@ public class DatabaseAdapter extends RecyclerView.Adapter<DatabaseAdapter.Databa
     public DatabaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Layout Inflator is Used to load the Design for one item in the list.
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.singlerowdatabase,parent,false);
-        return new DatabaseViewHolder(view, recyclerViewInterface);
+        return new DatabaseViewHolder(view, recyclerViewInterface, DatabaseList);
     }
 
 
@@ -63,7 +64,7 @@ public class DatabaseAdapter extends RecyclerView.Adapter<DatabaseAdapter.Databa
 
         TextView tableName;
 
-        public DatabaseViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
+        public DatabaseViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface, List<String> DatabseList) {
             super(itemView);
             // itemView finds the textView inside the Layout.
             tableName = itemView.findViewById(R.id.tableName);
@@ -76,11 +77,21 @@ public class DatabaseAdapter extends RecyclerView.Adapter<DatabaseAdapter.Databa
                         int position = getBindingAdapterPosition();
                         // checking if the position is Valid.
                         if (position != RecyclerView.NO_POSITION){
-                            recyclerViewInterface.onItemClick(position);
+                            try{
+                                File jsonFile = DatabaseToJsonConvertor.convertDatabaseToJson(itemView.getContext(),DatabseList.get(position));
+                                JsonHttpServer jsonHttpServer = new JsonHttpServer(8080,jsonFile);
+                                jsonHttpServer.start();
+
+                                // Gnerating the Local Url
+                                String url = "http://localhost:8080";
+                                recyclerViewInterface.onItemClick(position,url);
+
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
                         }
                     }
                 }
-
 
             });
         }

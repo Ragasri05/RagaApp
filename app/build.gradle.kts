@@ -57,6 +57,14 @@ dependencies {
     // To generate a Url.
     implementation (libs.nanohttpd)
 
+    // Retrofit
+    implementation (libs.retrofit)
+    implementation (libs.retrofit)
+
+    // Gson converter for Retrofit
+    implementation (libs.converter.gson)
+    implementation (libs.converter.gson)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

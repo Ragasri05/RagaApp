@@ -1,23 +1,15 @@
 package com.example.foodorderapp;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -94,10 +86,13 @@ public class Customer extends AppCompatActivity implements RecyclerViewInterface
         // if DatabseDir doesn't exist, it will return a new Directory.
         return new ArrayList<>();
     }
+
+
     // All the code which want to execute when the item is clicked must be placed in the onItemClick method.
     @Override
-    public void onItemClick(int position) {
+    public void onItemClick(int position, String url) {
         Intent intent = new Intent(Customer.this, CustomerMenu.class);
         startActivity(intent);
     }
+
 }
