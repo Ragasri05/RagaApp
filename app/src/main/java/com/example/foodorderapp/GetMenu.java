@@ -23,7 +23,7 @@ public class GetMenu extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView); // Ensure this ID matches your XML layout
         recyclerView.setLayoutManager(new LinearLayoutManager(this)); // Set layout manager
         Oid = getIntent().getStringExtra("ownerId");
-        DatabaseName = "foodDataBase"+Oid;
+        DatabaseName = "foodDataBase"+Oid+".db";
 
 
         getTheMenu();

@@ -4,5 +4,5 @@ package com.example.foodorderapp;
 public interface RecyclerViewInterface {
 
     // All the code which want to execute when the item is clicked must be placed in the onItemClick method.
-    void onItemClick(int position, String url);
+    void onItemClick(int position);
 }

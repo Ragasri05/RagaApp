@@ -1,6 +1,6 @@
 package com.example.foodorderapp;
 
-import android.annotation.SuppressLint;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -124,14 +124,13 @@ public class LoginScreen extends AppCompatActivity {
 
         // Shared Preferences.
         sharedPreferences = getSharedPreferences("MySharedPreferences",MODE_PRIVATE);
-        nightMode = sharedPreferences.getBoolean("night",false);  // light mode will be default mode.
+        nightMode = sharedPreferences.getBoolean("night",false);
         if (nightMode){
             aSwitch.setChecked(true);
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
-
         aSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -141,15 +140,18 @@ public class LoginScreen extends AppCompatActivity {
     }
 
     private void setTheme(){
-        if (nightMode){
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        if (nightMode){  // If dark mode is currently ON
+            // it switches to light mode
+            // This method is used to set the app's theme mode globally.
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO); //
             editor = sharedPreferences.edit();
-            editor.putBoolean("night",false);
+            editor.putBoolean("night",false); // saving the new setting
         }
-        else {
+        else { // if light mode is currently on
+            // them it switches to light mode.
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             editor = sharedPreferences.edit();
-            editor.putBoolean("night",true);
+            editor.putBoolean("night",true); // saving the new setting.
         }
         editor.apply();
     }

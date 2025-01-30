@@ -65,6 +65,9 @@ dependencies {
     implementation (libs.converter.gson)
     implementation (libs.converter.gson)
 
+    implementation (libs.gson)
+
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

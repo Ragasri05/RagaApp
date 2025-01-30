@@ -15,7 +15,7 @@ import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
-    // data source for the adapter.
+    // data source for  the adapter.
     List<FoodItemsEntity> foodItemsEntity;
 
     // constructor to initialise the adapter.
@@ -42,7 +42,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Get the adapter position dynamically
+                // Get the adapter position dynamically.
                 int currentPosition = holder.getBindingAdapterPosition();
 
                 // Ensure position is valid

@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         String Oid = getIntent().getStringExtra("ownerId");
         ownerId.setText("UserId: "+Oid);
-        String DatabaseName = "foodDataBase"+Oid;
+        String DatabaseName = "foodDataBase"+Oid+".db";
         // when save button is clicked and if the food item doesn't exist in the database, then addFoodItems Method is called.
         savebutton.setOnClickListener(new View.OnClickListener() {
             @Override

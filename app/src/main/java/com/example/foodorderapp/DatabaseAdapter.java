@@ -1,5 +1,7 @@
 package com.example.foodorderapp;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -7,14 +9,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.badge.BadgeUtils;
 
+import org.json.JSONException;
+
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class DatabaseAdapter extends RecyclerView.Adapter<DatabaseAdapter.DatabaseViewHolder> {
     //Defining a variable to hold the recyclerView Interface.
@@ -24,11 +32,11 @@ public class DatabaseAdapter extends RecyclerView.Adapter<DatabaseAdapter.Databa
     private List<String> DatabaseList;
     Context context;
 
-    public DatabaseAdapter(RecyclerViewInterface recyclerViewInterface, List<String> DatabaseList) {
+    public DatabaseAdapter(Context context, RecyclerViewInterface recyclerViewInterface, List<String> DatabaseList) {
+        this.context = context;
         this.recyclerViewInterface = recyclerViewInterface;
         this.DatabaseList = DatabaseList;
     }
-
 
     @NonNull
     @Override
@@ -48,14 +56,25 @@ public class DatabaseAdapter extends RecyclerView.Adapter<DatabaseAdapter.Databa
         String databaseName = DatabaseList.get(position);
         // sets the name to the Text View in the Layout.
         holder.tableName.setText(databaseName);
+        /*
+        // ===1===
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, CustomerMenu.class);
+            intent.putExtra("selectedDatabaseName",databaseName);
+            context.startActivity(intent);
+        });
 
-
+         */
+        holder.itemView.setOnClickListener(v -> {
+           recyclerViewInterface.onItemClick(position);
+        });
     }
 
     @Override
-    // this method returns the totak number of items in the List.
+    // this method returns the total number of items in the List.
     // because the Recycler View needs to Know How many items to Display.
     public int getItemCount() {
+
         return DatabaseList.size();
     }
 
@@ -68,34 +87,12 @@ public class DatabaseAdapter extends RecyclerView.Adapter<DatabaseAdapter.Databa
             super(itemView);
             // itemView finds the textView inside the Layout.
             tableName = itemView.findViewById(R.id.tableName);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (recyclerViewInterface != null){
-                        // gets the position of the item associated with a specific ViewHolder.
-                        int position = getBindingAdapterPosition();
-                        // checking if the position is Valid.
-                        if (position != RecyclerView.NO_POSITION){
-                            try{
-                                File jsonFile = DatabaseToJsonConvertor.convertDatabaseToJson(itemView.getContext(),DatabseList.get(position));
-                                JsonHttpServer jsonHttpServer = new JsonHttpServer(8080,jsonFile);
-                                jsonHttpServer.start();
-
-                                // Gnerating the Local Url
-                                String url = "http://localhost:8080";
-                                recyclerViewInterface.onItemClick(position,url);
-
-                            }catch (Exception e){
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }
-
-            });
         }
     }
+
+
+
+
 }
 
 
