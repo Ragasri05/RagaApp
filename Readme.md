@@ -335,6 +335,7 @@ public class LoginScreen extends AppCompatActivity {
 }
 ```
 ### Service provider class:
+```
 package com.example.foodorderapp;
 
 import android.app.Service;
@@ -347,22 +348,30 @@ import androidx.annotation.Nullable;
 
 public class ServiceProvider extends Service {
 
-    //declaring Mediaplayer Object.
+    //declaring Mediaplayer Object to play an audio file.
     private MediaPlayer player;
 
     // execution of service will start on calling this method.
     // on calling this method.
     @Override
+    // parameters are:
+    // intent --> intent that started the service. here intent will carry the data passed from the component that started the service.
+    // flags --> it provides additional information on how the service is started.
+    // startId --> a unique id for each start request.
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
         // will play default ringtone when service started.
+        // creating a Media Player.
         player = MediaPlayer.create(this, Settings.System.DEFAULT_ALARM_ALERT_URI);
+        // makes the sound play in a loop continuously
         player.setLooping(true);
+        // starts playing the sound
         player.start();
-        // returns the status of the program.
+        // even if the app is closed the service keeps running in the back ground.
         return START_STICKY;
     }
 
+    // when OnDestroy is called, the service stops playing.
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -371,9 +380,11 @@ public class ServiceProvider extends Service {
 
     @Nullable
     @Override
+    // onBind is used when we want to communicate with other components of the app.
     public IBinder onBind(Intent intent) {
         return null;
     }
 }
+
 ```
 
