@@ -319,6 +319,7 @@ public class LoginScreen extends AppCompatActivity {
     private void setTheme(){
         if (nightMode){  // If dark mode is currently ON
             // it switches to light mode
+            // it is a class which helps manage themes dynamically.
             // This method is used to set the app's theme mode globally.
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO); //
             editor = sharedPreferences.edit();
