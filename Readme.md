@@ -1,179 +1,391 @@
-# Owner 
-Register/Login --> Add/Update Menu --> Sinc Menu to Firebase cloud.
-# Customer
-Scan the Qr code --> View the menu --> add items to the cart --> Enter the mobile_Number and Name -->  Place Order.
-# owner 
-receives the order along with name and mobilenumber --> once food is prepared the owner will click a button and this will send message to Cutomer's mobile number.
-# Customer 
-receives a message "Order done!"
-# Steps:
-- Make a login and register page
-- The owner must use apps UI to add menu items. This data will be saved locally to the apps Roomdatabase.
-- make the layout.
-- ![Screenshot from 2025-01-05 13-12-53](https://github.com/user-attachments/assets/71201d0c-2509-48c3-9296-178125560ad9)
-- Make an Entity class.(java class) { Entity class represents a table in the database}
-- Make a Dao Interface.
-- Make a Database class.
+# Owner Flow:
+- if owner has account, then owner has to login.
+- if owner doesn't have account, then owner has to regidter first.
+- once the owner logs in he will be able to add food item and price.
+- when the owner clicks on getMenu button, he/she will be able to view all the item and can delete a particular item by clicking on delete button.
+# Customer Flow:
+- In the login login Page, there is a Button for Customer.
+- when the Customer Clicks on it, he will be able to view the list of databases stored in the app.
+- when the user clicks on a particular Databse the app redirects then to that menu and will be able to View the menu.
 
-## Make a new Activity for Fetching Data. name= GetMenu
-- Add dependencies for recyclerview and cardView.
-- Make a linear Layout file with Vertical orientation and add recyclerview.
-- In GetMenu java file,make an object for recyclerview and using findViewByIdMethod, link the recyclerView to the xml file.
-- set the Layput Manager for the recycler view.
+# Components Used in the app.
+- TextView
+- EditText
+- Button
+- RecyclerView.
+- Intent
+- Firebase
+# Basics:
+## onCreate method:
+  * One of the life cycle methods of Android Activity.
+  * it is called when the Activity is first Created.
+  * it is used to initialise the components, set up the Ui, restore the saved instance state of the app.
 ```
-recyclerView = findViewById(R.id.recyclerView);
-recyclerView.setLayoutManager(new LinearLayoutManager(this));
-```
-# to COnvert Databse to Json.
-- Step1 : 
-```
-package com.example.foodorderapp;
-
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-
-// step 1 is create the Database to Json Convertor.
-public class DatabaseToJsonConvertor {
-    // Json exception handles errors if something goes Wrong while converting the database to Json format.
-    // IOException is used to handle the issues while saving the file.
-    public static File convertDatabaseToJson(Context context, String databaseName) throws JSONException, IOException {
-        // opening an existing database or creating a new one with the name provided in databaseName.
-        // Context.MODE_PRIVATE Ensures that the database is private to your app
-        // CursorFactory is an interface that allows you to customize how Cursor objects are created when you perform database queries.
-        // null means we are using the default Cursor.
-        SQLiteDatabase database = context.openOrCreateDatabase(databaseName, Context.MODE_PRIVATE, null);
-        // Cursor is like a pointer that iterates through each row in the pointer. null because initially not assigning any variable.
-        Cursor cursor = null;
-        // JsonArray will store the data which is present in the tables in Json Format.
-        JSONArray jsonArray = new JSONArray();
-        // running a SQLite query to get all the names of all the tables in the database.
-        // sqlite_master: A system table in SQLite that keeps metadata about tables.
-        // type='table': Filters only the tables
-        // and the result is stored in the cursor.
-        try {
-            // cursor stores the names of the Tables.
-            cursor = database.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
-            // moveToFirst() means the cursor will move to the first name of the Table.
-            // if the Table doesn't exist, then the condition is false.
-            if (cursor.moveToFirst()){
-                // loops through all the tables, fetches the data from each table and converts it Json file.
-                do {
-                    // retrieves the table Name from the first column of the cursor.
-                    String tableName = cursor.getString(0);
-                    // android_metadata: Stores metadata about the database. It's not a user-defined table.
-                    // sqlite_sequence: Stores information about auto-incremented values for tables.
-                    // thses tables are skipped beacuse they don't contain any meaning ful data.
-                    if (!tableName.equals("android_metadata") && !tableName.equals("sqlite_sequence")) {
-                        // fetches all the rows and tables from current table and stores in the tableCursor.
-                        Cursor tableCursor = database.rawQuery("SELECT * FROM " + tableName, null);
-                        // a Json array is created to hold all the rows of the current Table.
-                        JSONArray tableArray = new JSONArray();
-                        // moves to the next row and the loop stops when there are no more loops.
-                        while (tableCursor.moveToNext()) {
-                            // creating a Json object to represent a single row in the table.
-                            JSONObject rowObject = new JSONObject();
-                            // loop through Coloumns.
-                            // getColumnCount() gets the total number of columns in the table.
-                            for (int i = 0; i < tableCursor.getColumnCount(); i++) {
-                                // getColumnName becomes the Json Key and gatString becomes the Json value.
-                                rowObject.put(tableCursor.getColumnName(i), tableCursor.getString(i));
-                                // the Json object would be like this. ---> {"id": "1", "name": "Raga", "age": "17"}
-                            }
-                            // putting each row in the tableArray
-                            tableArray.put(rowObject);
-                        }
-                        //This means you are telling the system that you're done using it, and it can now free up the memory or resources that were being used by that cursor.
-                        tableCursor.close();
-                        // creating a Json object to represent the entire Table.
-                        // tableObject will store tableName as the Key and tableArray as Value.
-                        JSONObject tableObject = new JSONObject();
-                        tableObject.put(tableName, tableArray);
-                        // adding the tables Json Object to main Json Array.
-                        jsonArray.put(tableObject);
-                    }
-                }while (cursor.moveToNext()) ; //loop is continued till all tables are processed.
-            }
-        }finally {
-            // closing the main cursor and database to prevent dataLoss.
-            if (cursor != null){
-                cursor.close();
-                database.close();
-            }
-        }
-        // creating a file object.
-        // context.getFilesDir --> retrieves the internal storage of the app.
-        File jsonFile = new File(context.getFilesDir()+databaseName+".json");
-        // Using a file writer, you write data into the Json file.
-        FileWriter writer = new FileWriter(jsonFile);
-        writer.write(jsonArray.toString());
-        writer.close();
-
-        return jsonFile;
-    }
+// passing the object of Bundle class as a parameter.
+protected void onCreate(Bundle savedInstanceState) {
+    // the parent class initialises the activity properly before the custom code runs.
+    // if not done properly the activity might crash.
+    super.onCreate(savedInstanceState);
+    // it ensures that our app content uses the full screen.
+    EdgeToEdge.enable(this);
+    // setContentView method belongs to Activity class in android.
+    // it loads the xml file and displays it on the screen.
+    setContentView(R.layout.activity_register_screen);
 }
+```
+## getApplicationContext():
+- Context: it is like a gateway to apps resources and data.
+- getApplicationCOntext() is a method from Context class in Android that gives you global application context instead of a particular apps's context.
 
-```
-- Step2:
-  * to serve Json file Locally.
-  * Add NanoHTTPD to Your Project
-  *  This will allow you to generate a URL like http://localhost:8080 that other parts of your app (like Retrofit) can use to fetch the file.
-  *  add the nanoHTTPD dependency
-```
-    implementation (libs.nanohttpd)
-```
-- Step3:
-  * to use the nanoHTTPD we must create a server class which serves the Json file.
+###### NOTE:
+- Bundle: Bundle is a Data Structure in Android that Stores Key value pairs.</br>it is used to store and restore activity state configurations like Screnn Rotation etc.
+- super: it is used to call the parent class's method
+# Explaination for the Code.
+## Register Screen:
 ```
 package com.example.foodorderapp;
 
-import java.io.File;
-import java.io.FileInputStream;
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import fi.iki.elonen.NanoHTTPD;
+import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
-// NanoHTTPD is a library for creating HTTP severs.
-public class JsonHttpServer extends NanoHTTPD {
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.squareup.picasso.Picasso;
 
-    private final File jsonFile;
-    public JsonHttpServer(int port, File jsonFile) {
-        super(port); // the port number to which the server will listen.
-        this.jsonFile = jsonFile;
-    }
+public class RegisterScreen extends AppCompatActivity {
+
+    // Declaring references.
+    //1.1
+    FirebaseAuth fb;
+    EditText REmail, RPassword;
+    TextView RTextView;
+    Button RButton;
+    ImageView imageView;
+
 
     @Override
-    // this method is called whenever the server receives Http request.
-    // IHTTPSession session Contains details of the incoming HTTP request.
-    public Response serve(IHTTPSession session) {
-        return super.serve(session);
-        try{
-            // FileInputStream is a class in java.io package.
-            // it is used to read data from the files.
-            FileInputStream fileInputStream = new FileInputStream(jsonFile);
-            // newFixedLengthResponse creates a http response.
-            //parameters are status,content type (o indicate that the response is a JSON file), fileContent (reads the file using fileInputStream,file length.
-            return newFixedLengthResponse(Response.Status.OK,"application/json",fileInputStream,jsonFile.length());
-        }catch (Exception e){
-            //logs the error message
-            e.printStackTrace();
-            return newFixedLengthResponse(Response.Status.INTERNAL_ERROR,"text/plain", "Error serving file")
-        }
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_register_screen);
+
+            //1.2 INitialises the firebase Authentication Instance.
+            // this method connects our app to firebase Authentications services.
+            // it makes sure that all the authentication related ations are handled by a single user.
+            fb = FirebaseAuth.getInstance();
+            REmail = findViewById(R.id.Ret1);
+            RPassword = findViewById(R.id.Ret2);
+            RTextView = findViewById(R.id.Rtv1);
+            RButton = findViewById(R.id.Rb1);
+            imageView = findViewById(R.id.imageView);
+
+            // checking if the user already logged in
+            // fb.getCurrentUser returns the currently signed in user.
+            if (fb.getCurrentUser() != null){
+                // if the user is already authenticated then it redirects them to main activity.
+                // the first parameter is the context and the second parameter is the actvity which you want to open.
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish();
+            }
+
+            // when the button is clicked then the user will register to the app
+            // setOnClickListener tells android to perform the following code when the button is clicked.
+            // OnClickListener is an interface in View class and OnClick() is a method that belongs to the interface.
+            RButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // creating Strings ts read the text from edit Text.
+                    // getText() belongs to editText class. it gets the Text from Edit Text.
+                    // toString() is called to get the string representation of entered Text.
+                    //trim() belongs to String class it removes the spaces which are there in the begining and the ending.
+                    String email = REmail.getText().toString().trim();
+                    String password = RPassword.getText().toString().trim();
+
+                    // TextUtils is a utility class in android package.
+                    // isEnpty() is a method which returns true is the String is Empty.
+                    if (TextUtils.isEmpty(email)) {
+                        // setError method belongs to editText class.
+                        // it sets error if it is empty.
+                        REmail.setError("Please enter your email address");
+                        return;
+                    }
+                    if (TextUtils.isEmpty(password)) {
+                        RPassword.setError("Please Enter your password");
+                        return;
+                    }
+
+                    // creating a new user.
+                    //registering the user with firebase;
+                    // this is am ethod in firebase authentication which creates a new user with password.
+                    // addOnCompleteListener add a listener to the Task. it listens for the task and adds executes the OnCompleteMethod.
+                    // it triggers once the task finishes whether it was successfull or not..
+                    // then the onComplete() is called which takes the result of the Task as parameter.
+                    // 
+                    fb.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        // this is the onComplete() method, which is called once the task is complete. It takes the Task<AuthResult> as a parameter, which contains the result of the operation.
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            // if it is successfull.
+                            if (task.isSuccessful()) {
+                                Toast.makeText(RegisterScreen.this, "User Created", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            }
+                            else{
+                                Toast.makeText(RegisterScreen.this, "Opps!, an error occured."+ task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
+                }
+            });
+
+            RTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(getApplicationContext(), LoginScreen.class));
+                    finish();
+                }
+            });
+
+            //8.ImageLoading Using Picasso.
+            String url = "https://img.freepik.com/premium-vector/register-now-badge-vector-isolated-white-vector-button-registration-services-blogs-websites_735449-447.jpg?semt=ais_hybrid";
+            // get() --> used to instantiate the Picasso library
+            // load(url) --> fetches the image from the given url.
+            // error --> if picasso fails to loads the image then the image which is given in error will load.
+            // into() --> is used to put the loaded image into the image View.
+            Picasso.get().load(url).error(R.drawable.ic_launcher_foreground).into(imageView);
     }
 }
 ```
-- step 4: Handling the RecyclerView Click.
-  * when the user clicks on the database recyclerView.
-  * it converts the selected Dtabase to JSon
-  * Starts the Http server to Serve Json file.
-  * Uses Retrofit to fetch and display the data.
+## Login Screen.
+```
+package com.example.foodorderapp;
 
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.squareup.picasso.Picasso;
+
+
+public class LoginScreen extends AppCompatActivity {
+    EditText LEmail, LPassword;
+    TextView LTextView;
+    Button LButton, MenuButton, StopMusic, startMusic;
+    FirebaseAuth fb;
+    ImageView im1;
+    SharedPreferences sharedPreferences;
+    Switch aSwitch;
+    Boolean nightMode;
+    SharedPreferences.Editor editor;
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_login_screen);
+
+        LEmail = findViewById(R.id.LEmail);
+        LPassword = findViewById(R.id.LPassword);
+        LButton = findViewById(R.id.LButton);
+        LTextView = findViewById(R.id.LTextView);
+        fb = FirebaseAuth.getInstance();
+        MenuButton = findViewById(R.id.MenuButton);
+        StopMusic = findViewById(R.id.StopMusicButton);
+        startMusic =findViewById(R.id.startMusicButton);
+        aSwitch = findViewById(R.id.aSwitch);
+
+        LButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String email = LEmail.getText().toString().trim();
+                String password = LPassword.getText().toString().trim();
+
+                if (TextUtils.isEmpty(email)) {
+                    LEmail.setError("Please enter your email address");
+                    return;
+                }
+                if (TextUtils.isEmpty(password)) {
+                    LPassword.setError("Please Enter your password");
+                    return;
+                }
+                fb.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            String ownerId = fb.getCurrentUser().getUid();
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            intent.putExtra("ownerId", ownerId); // Pass the ownerId
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(LoginScreen.this, "error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+            }
+        });
+
+        LTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginScreen.this, RegisterScreen.class));
+                finish();
+            }
+        });
+
+        MenuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginScreen.this, Customer.class));
+                finish();
+            }
+        });
+
+        startMusic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startService(new Intent(LoginScreen.this, ServiceProvider.class));
+            }
+        });
+
+        StopMusic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                stopService(new Intent(LoginScreen.this,ServiceProvider.class));
+            }
+        });
+
+
+        //8.Loading Image udsing Picasso.
+        im1 = findViewById(R.id.imageView2);
+        String url = "https://thumbs.dreamstime.com/b/login-icon-button-vector-illustration-isolated-white-background-127001787.jpg";
+        Picasso.get().load(url).into(im1);
+
+
+        // Shared Preferences.
+        sharedPreferences = getSharedPreferences("MySharedPreferences",MODE_PRIVATE);
+        nightMode = sharedPreferences.getBoolean("night",false);
+        if (nightMode){
+            aSwitch.setChecked(true);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+        aSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setTheme();
+            }
+        });
+    }
+
+    private void setTheme(){
+        if (nightMode){  // If dark mode is currently ON
+            // it switches to light mode
+            // it is a class which helps manage themes dynamically.
+            // This method is used to set the app's theme mode globally.
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO); //
+            editor = sharedPreferences.edit();
+            editor.putBoolean("night",false); // saving the new setting
+        }
+        else { // if light mode is currently on
+            // them it switches to light mode.
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            editor = sharedPreferences.edit();
+            editor.putBoolean("night",true); // saving the new setting.
+        }
+        editor.apply();
+    }
+}
+```
+### Service provider class:
+```
+package com.example.foodorderapp;
+
+import android.app.Service;
+import android.content.Intent;
+import android.media.MediaPlayer;
+import android.os.IBinder;
+import android.provider.Settings;
+
+import androidx.annotation.Nullable;
+
+public class ServiceProvider extends Service {
+
+    //declaring Mediaplayer Object to play an audio file.
+    private MediaPlayer player;
+
+    // execution of service will start on calling this method.
+    // on calling this method.
+    @Override
+    // parameters are:
+    // intent --> intent that started the service. here intent will carry the data passed from the component that started the service.
+    // flags --> it provides additional information on how the service is started.
+    // startId --> a unique id for each start request.
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        super.onStartCommand(intent, flags, startId);
+        // will play default ringtone when service started.
+        // creating a Media Player.
+        player = MediaPlayer.create(this, Settings.System.DEFAULT_ALARM_ALERT_URI);
+        // makes the sound play in a loop continuously
+        player.setLooping(true);
+        // starts playing the sound
+        player.start();
+        // even if the app is closed the service keeps running in the back ground.
+        return START_STICKY;
+    }
+
+    // when OnDestroy is called, the service stops playing.
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        player.stop();
+    }
+
+    @Nullable
+    @Override
+    // onBind is used when we want to communicate with other components of the app.
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+}
+
+```
 
