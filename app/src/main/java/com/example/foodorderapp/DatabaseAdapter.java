@@ -38,6 +38,7 @@ public class DatabaseAdapter extends RecyclerView.Adapter<DatabaseAdapter.Databa
         this.DatabaseList = DatabaseList;
     }
 
+
     @NonNull
     @Override
     // OnCreate is called when a View Holder for a new Item is Created.

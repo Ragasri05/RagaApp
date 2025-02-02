@@ -1,4 +1,4 @@
-package com.example.foodorderapp;
+/*package com.example.foodorderapp;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -32,3 +32,5 @@ public class JsonHttpServer extends NanoHTTPD {
         }
     }
 }
+
+ */

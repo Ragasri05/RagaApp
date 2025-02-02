@@ -1,4 +1,4 @@
-package com.example.foodorderapp;
+/*package com.example.foodorderapp;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -56,3 +56,5 @@ public class Update extends AppCompatActivity {
         });
     }
 }
+
+ */

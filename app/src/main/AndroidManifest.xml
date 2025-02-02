@@ -50,9 +50,10 @@
                 <data android:path="/getthemenu" />
             </intent-filter>
         </activity>
+        <!--
         <activity
             android:name=".Update"
-            android:exported="false" />
+            android:exported="false" />-->
         <activity
             android:name=".GetMenu"
             android:exported="false" />

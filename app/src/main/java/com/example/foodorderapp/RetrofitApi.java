@@ -1,4 +1,4 @@
-package com.example.foodorderapp;
+/*package com.example.foodorderapp;
 
 import com.google.gson.JsonArray;
 
@@ -12,3 +12,5 @@ public interface RetrofitApi {
     @GET("databases/{dbName}") // "/" refers to the root part of the Url
     Call<JsonArray> getDatabaseData(@Path("dbName") String databaseName);
 }
+
+ */

@@ -25,11 +25,13 @@ import com.squareup.picasso.Picasso;
 
 public class RegisterScreen extends AppCompatActivity {
 
+    // Declaring references.
     FirebaseAuth fb;
     EditText REmail, RPassword;
     TextView RTextView;
     Button RButton;
     ImageView imageView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +55,6 @@ public class RegisterScreen extends AppCompatActivity {
             RButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // creat5ng Str5ngs t6 read the text fr60 ed5t Text.
                     String email = REmail.getText().toString().trim();
                     String password = RPassword.getText().toString().trim();
 
@@ -76,7 +77,7 @@ public class RegisterScreen extends AppCompatActivity {
                                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                             }
                             else{
-                                Toast.makeText(RegisterScreen.this, "Opps!, an error occured."+ task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterScreen.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     });

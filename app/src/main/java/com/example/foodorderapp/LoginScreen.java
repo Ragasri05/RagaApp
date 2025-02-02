@@ -101,6 +101,7 @@ public class LoginScreen extends AppCompatActivity {
             }
         });
 
+        // when start Music is clicked it creates the background service.
         startMusic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,6 +112,7 @@ public class LoginScreen extends AppCompatActivity {
         StopMusic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // creating a new Intent in stop service in to start the service provider class.
                 stopService(new Intent(LoginScreen.this,ServiceProvider.class));
             }
         });
@@ -121,7 +123,6 @@ public class LoginScreen extends AppCompatActivity {
         String url = "https://thumbs.dreamstime.com/b/login-icon-button-vector-illustration-isolated-white-background-127001787.jpg";
         Picasso.get().load(url).into(im1);
 
-
         // Shared Preferences.
         sharedPreferences = getSharedPreferences("MySharedPreferences",MODE_PRIVATE);
         nightMode = sharedPreferences.getBoolean("night",false);
@@ -131,6 +132,7 @@ public class LoginScreen extends AppCompatActivity {
         }else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
+
         aSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
