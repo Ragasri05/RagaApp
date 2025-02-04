@@ -46,6 +46,7 @@ public class RegisterScreen extends AppCompatActivity {
             RButton = findViewById(R.id.Rb1);
             imageView = findViewById(R.id.imageView);
 
+
             // checking if the user already logged in
             if (fb.getCurrentUser() != null){
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
@@ -92,6 +93,7 @@ public class RegisterScreen extends AppCompatActivity {
                     finish();
                 }
             });
+
 
             //8.ImageLoading Using Picasso.
             String url = "https://img.freepik.com/premium-vector/register-now-badge-vector-isolated-white-vector-button-registration-services-blogs-websites_735449-447.jpg?semt=ais_hybrid";

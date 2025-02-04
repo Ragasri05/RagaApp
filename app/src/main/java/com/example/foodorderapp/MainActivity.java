@@ -66,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+
         //goes to Getmenu.java when fetch button is clicked.
         fetchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,10 +78,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // intent filter tells android what events the receiver should receiver for.
         IntentFilter intentFilter = new IntentFilter();
+        // specifying that this filter listens for wifi change broad cast.
         intentFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+        // Registers the receivers to wifi change state actions.
         registerReceiver(receiver,intentFilter);
-
     }
 
     public void logout(View view) {

@@ -9,9 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
-
 import java.util.List;
-// Adapter class is the bridge between datasouce and the UI componenet.
+
+// Adapter class is the bridge between datasource and the UI component.
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
@@ -47,6 +47,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
                 // Ensure position is valid
                 if (currentPosition != RecyclerView.NO_POSITION) {
+
                     //Instantiating the Room database.
                     FoodDatabase fdb = Room.databaseBuilder(holder.tv1.getContext(),
                             FoodDatabase.class, "my_food_database").allowMainThreadQueries().build();

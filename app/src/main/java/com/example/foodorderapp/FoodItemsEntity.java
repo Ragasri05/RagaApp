@@ -14,7 +14,7 @@ public class FoodItemsEntity {
     // automatically generates the value for this field.
     @PrimaryKey (autoGenerate = true)
     public int uid;
-    // column in the databse table with name food.
+    // column in the database table with name food.
     @ColumnInfo (name = "food")
     public String food;
     //column in the databse table with name price.
@@ -22,7 +22,7 @@ public class FoodItemsEntity {
     public Double price;
 
 
-    public FoodItemsEntity(String food , Double price) {
+    public FoodItemsEntity(String food, Double price) {
         this.uid = uid;
         this.food = food;
         this.price = price;

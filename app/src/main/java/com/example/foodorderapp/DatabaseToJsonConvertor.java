@@ -1,4 +1,4 @@
-package com.example.foodorderapp;
+/*package com.example.foodorderapp;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -91,3 +91,5 @@ public class DatabaseToJsonConvertor {
         return jsonFile;
     }
 }
+
+ */

@@ -47,6 +47,5 @@ public class DatabaseToMenu extends AppCompatActivity {
             });
         }).start();
 
-
     }
 }

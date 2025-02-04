@@ -13,7 +13,7 @@ import android.widget.Toast;
 public class Receiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        // checking if the broad cast event is related to wifi change.
         if (WifiManager.WIFI_STATE_CHANGED_ACTION.equals(intent.getAction())){
             int wifiState = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, WifiManager.WIFI_STATE_UNKNOWN);
             switch (wifiState){
@@ -24,7 +24,6 @@ public class Receiver extends BroadcastReceiver {
                 case WifiManager.WIFI_STATE_DISABLED:
                     Toast.makeText(context, "Wi-Fi is DISABLED", Toast.LENGTH_SHORT).show();
                     break;
-
                 case WifiManager.WIFI_STATE_ENABLING:
                     Toast.makeText(context, "Wi-Fi is ENABLING", Toast.LENGTH_SHORT).show();
                     break;
@@ -34,7 +33,6 @@ public class Receiver extends BroadcastReceiver {
                     break;
 
                 case WifiManager.WIFI_STATE_UNKNOWN:
-                default:
                     Toast.makeText(context, "Wi-Fi state is UNKNOWN", Toast.LENGTH_SHORT).show();
                     break;
             }

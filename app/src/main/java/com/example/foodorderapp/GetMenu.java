@@ -24,12 +24,9 @@ public class GetMenu extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this)); // Set layout manager
         Oid = getIntent().getStringExtra("ownerId");
         DatabaseName = "foodDataBase"+Oid+".db";
-
-
         getTheMenu();
-
-
     }
+
 
     public void getTheMenu(){
         //Instantiating the Room database.
@@ -46,5 +43,4 @@ public class GetMenu extends AppCompatActivity {
         //The RecyclerView will call the Adapter methods to manage and display its items.
         recyclerView.setAdapter(adapter);
     }
-
 }
