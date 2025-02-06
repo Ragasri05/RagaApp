@@ -21,6 +21,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+// http-client for android.
+// used for communicating with a server by making Api calls.
 public class SampleRetrofit extends AppCompatActivity {
 
     TextView textView;

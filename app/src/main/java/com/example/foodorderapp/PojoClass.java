@@ -1,7 +1,7 @@
 package com.example.foodorderapp;
 
 public class PojoClass {
-    // this will be the template for the data that is going to be parsed.
+    // template for the data that is going to be parsed.
    private String welcome;
    private String imgLink;
 

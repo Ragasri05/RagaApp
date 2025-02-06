@@ -28,7 +28,7 @@ import com.squareup.picasso.Picasso;
 public class LoginScreen extends AppCompatActivity {
     EditText LEmail, LPassword;
     TextView LTextView;
-    Button LButton, MenuButton, StopMusic, startMusic;
+    Button LButton, MenuButton, StopMusic, startMusic,feedback;
     FirebaseAuth fb;
     ImageView im1;
     SharedPreferences sharedPreferences;
@@ -52,6 +52,7 @@ public class LoginScreen extends AppCompatActivity {
         StopMusic = findViewById(R.id.StopMusicButton);
         startMusic =findViewById(R.id.startMusicButton);
         aSwitch = findViewById(R.id.aSwitch);
+        feedback = findViewById(R.id.feedback);
 
         LButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,6 +114,13 @@ public class LoginScreen extends AppCompatActivity {
             public void onClick(View view) {
                 // creating a new Intent in stop service in to start the service provider class.
                 stopService(new Intent(LoginScreen.this,ServiceProvider.class));
+            }
+        });
+
+        feedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginScreen.this, FeedBack.class));
             }
         });
 
