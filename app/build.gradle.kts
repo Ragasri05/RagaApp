@@ -7,6 +7,7 @@ android {
     namespace = "com.example.foodorderapp"
     compileSdk = 34
 
+    // basic configuration that applies to the app by default.
     defaultConfig {
         applicationId = "com.example.foodorderapp"
         minSdk = 23
@@ -19,13 +20,16 @@ android {
 
     buildTypes {
         release {
+            //removal of unused code
             isMinifyEnabled = false
+            // proguard helps reduce the size of the app and makes it difficult for reverse engineering it
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -48,6 +52,7 @@ dependencies {
     //cardView
     implementation(libs.cardview)
 
+
     //RoomDatabase
     implementation(libs.androidx.room.runtime)
     annotationProcessor(libs.androidx.room.compiler) // For Kotlin projects
@@ -66,6 +71,7 @@ dependencies {
     implementation (libs.converter.gson)
 
     implementation (libs.gson)
+
 
 
     testImplementation(libs.junit)

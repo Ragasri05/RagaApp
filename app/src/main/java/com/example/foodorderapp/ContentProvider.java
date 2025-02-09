@@ -115,6 +115,7 @@ public class ContentProvider extends android.content.ContentProvider {
             + " (id INTEGER PRIMARY KEY AUTOINCREMENT, "
             + " feedback TEXT NOT NULL) ";
 
+
     private static class DatabaseHelper extends SQLiteOpenHelper{
 
         public DatabaseHelper(@Nullable Context context ) {

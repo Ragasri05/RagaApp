@@ -86,7 +86,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             tv2 = itemView.findViewById(R.id.tv2);
             deleteButton = itemView.findViewById(R.id.deleteButton);
             editButton = itemView.findViewById(R.id.editButton);
-
         }
     }
 }
