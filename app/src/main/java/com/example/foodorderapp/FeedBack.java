@@ -35,7 +35,6 @@ public class FeedBack extends AppCompatActivity {
     Button sendFeedback;
     EditText feedback;
     TextView textView;
-    Uri path;
     ImageView imageView;
 
 
@@ -86,7 +85,7 @@ public class FeedBack extends AppCompatActivity {
         File imageFile = new File(getExternalFilesDir("Download"), "icon.jpg");
 
         Uri imageUri = FileProvider.getUriForFile(this, fileAuthority, imageFile);
-
+        imageView.setImageURI(imageUri);
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("image/*");
         shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
