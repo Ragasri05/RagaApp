@@ -386,8 +386,9 @@ public class ServiceProvider extends Service {
         return null;
     }
 }
-
 ```
-# Content Provider
-- 
-
+# Network Security Config file:
+- The Network Security Configuration feature lets you customize your app's network security settings in a safe, declarative configuration file without modifying app code.
+- These settings can be configured for specific domains and for a specific app.
+- Think of Network Security Configuration like a security guard for your app’s internet connections.
+- Instead of writing complicated security code, you can create a simple configuration file (res/xml/network_security_config.xml) that tells your app how to handle network security.
